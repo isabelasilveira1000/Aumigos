@@ -1,7 +1,5 @@
 <?php 
 
-
-
 include_once 'includes/header.php' ?> 
 <link rel="stylesheet" href="assets/css/login.css">
  <h2>Entre em sua conta</h2>
