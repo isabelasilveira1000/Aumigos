@@ -22,13 +22,13 @@ if (!$cao || !$cao['disponivel']) {
     exit();
 }
 
-// Mensagem de erro se voltou com erro
+
 $erro = $_GET['erro'] ?? '';
 ?>
 
 <div class="adotar-box">
 
-  <!-- Coluna esquerda: info do cão -->
+
   <div class="adotar-cao">
     <img src="<?php echo htmlspecialchars($cao['foto']); ?>" alt="<?php echo htmlspecialchars($cao['nome']); ?>">
     <div class="adotar-cao-info">
