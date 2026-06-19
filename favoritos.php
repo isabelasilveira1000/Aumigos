@@ -1,6 +1,8 @@
-<?php include_once 'includes/header.php'; ?>
-<link rel="stylesheet" href="assets/css/catalogo.css">
-<link rel="stylesheet" href="assets/css/favoritos.css">
+<?php
+  $paginaCSS1 = 'assets/css/catalogo.css';
+  $paginaCSS2 = 'assets/css/favoritos.css';
+  include_once 'includes/header.php';
+?>
 
 <main>
 <?php
@@ -21,6 +23,21 @@ foreach ($users as $u) {
         $curtidos = $u['curtidos'] ?? [];
         break;
     }
+}
+
+// Desfavoritar via POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
+    $id = $_POST['id'];
+    foreach ($users as &$u) {
+        if ($u['email'] === $_SESSION['usuario']) {
+            $u['curtidos'] = array_values(array_filter($u['curtidos'] ?? [], fn($c) => $c !== $id));
+            $curtidos = $u['curtidos'];
+            break;
+        }
+    }
+    file_put_contents($arq_users, json_encode($users, JSON_PRETTY_PRINT));
+    header("Location: favoritos.php");
+    exit();
 }
 
 // Filtra só os cães curtidos
@@ -47,7 +64,10 @@ $caesCurtidos = array_filter($caes, fn($c) => in_array($c['id'], $curtidos));
     <div class="card-cachorro">
       <div class="card-img">
         <img src="<?php echo htmlspecialchars($cao['foto']); ?>" alt="<?php echo htmlspecialchars($cao['nome']); ?>">
-        <button class="btn-favorito favoritado" data-id="<?php echo $cao['id']; ?>" title="Remover dos favoritos">♥</button>
+        <form method="POST">
+          <input type="hidden" name="id" value="<?php echo $cao['id']; ?>">
+          <button type="submit" class="btn-favorito favoritado" title="Remover dos favoritos">♥</button>
+        </form>
       </div>
       <div class="card-body">
         <div class="card-header">
@@ -74,28 +94,5 @@ $caesCurtidos = array_filter($caes, fn($c) => in_array($c['id'], $curtidos));
 <?php endif; ?>
 
 </main>
-
-<script>
-document.querySelectorAll('.btn-favorito').forEach(btn => {
-  btn.addEventListener('click', function () {
-    const id = this.dataset.id;
-    const card = this.closest('.card-cachorro');
-
-    fetch('controllers/con_curtir.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'id=' + id
-    })
-    .then(r => r.json())
-    .then(data => {
-      if (!data.curtido) {
-        card.style.opacity = '0';
-        card.style.transition = 'opacity 0.3s';
-        setTimeout(() => card.remove(), 300);
-      }
-    });
-  });
-});
-</script>
 
 <?php include_once 'includes/footer.php'; ?>
