@@ -1,29 +1,38 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) {
-  session_start();
+    session_start();
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SITE</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <?php if (isset($paginaCSS)): ?>
-    <link rel="stylesheet" href="<?= $paginaCSS ?>">
-  <?php endif; ?>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUmas Gêmeas</title>
+
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- CSS específico da página -->
+    <?php if (isset($paginaCSS)): ?>
+        <link rel="stylesheet" href="<?= htmlspecialchars($paginaCSS) ?>">
+    <?php endif; ?>
 </head>
 
 <body>
 
-  <h1>AUmas gêmeas</h1>
+<h1>AUmas Gêmeas</h1>
 
 <header>
     <div class="nav-links">
-        <a href="inicio.php">Inicio</a>
+        <a href="inicio.php">Início</a>
         <a href="catalogo.php">AUmigos</a>
+
+        <?php if (isset($_SESSION['logado'])): ?>
+            <a href="favoritos.php">Favoritos</a>
+        <?php endif; ?>
     </div>
+
     <div class="nav-right">
         <?php if (isset($_SESSION['logado'])): ?>
             <a href="perfil.php" class="btn-castrar">Perfil</a>
