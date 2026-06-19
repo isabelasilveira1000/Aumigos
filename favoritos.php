@@ -1,9 +1,7 @@
 <?php
-  $paginaCSS1 = 'assets/css/catalogo.css';
-  $paginaCSS2 = 'assets/css/favoritos.css';
-  include_once 'includes/header.php';
+$paginaCSS = 'assets/css/favoritos.css';
+include_once 'includes/header.php';
 ?>
-
 <main>
 <?php
 if (!isset($_SESSION['logado'])) {
