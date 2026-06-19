@@ -1,3 +1,4 @@
+
 :root {
   --font-heading: 'Fredoka', Arial, sans-serif;
   --font-body: 'Fredoka', Arial, sans-serif;
@@ -430,11 +431,14 @@ header a[href*="cadastrar"]::before,
 }
 
 /* Remove a setinha padrão do details */
-.faq-item summary {
+.faq-item summary,
+.faq-item summary.faq-pergunta {
   list-style: none;
+  display: flex;
 }
 
-.faq-item summary::-webkit-details-marker {
+.faq-item summary::-webkit-details-marker,
+.faq-pergunta::-webkit-details-marker {
   display: none;
 }
 
