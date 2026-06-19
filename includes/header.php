@@ -1,17 +1,18 @@
-
 <?php
-if (session_start() === PHP_SESSION_NONE ) {
+if (session_status() === PHP_SESSION_NONE) {
   session_start();
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SITE</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SITE</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <?php if (isset($paginaCSS)): ?>
+    <link rel="stylesheet" href="<?= $paginaCSS ?>">
+  <?php endif; ?>
 </head>
 
 <body>
